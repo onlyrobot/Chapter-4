@@ -13,9 +13,6 @@ public class MainActivity extends AppCompatActivity {
     private View mRootView;
     private Clock mClockView;
 
-    private static Handler handler = new Handler() {
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,19 +27,11 @@ public class MainActivity extends AppCompatActivity {
                 mClockView.setShowAnalog(!mClockView.isShowAnalog());
             }
         });
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                mClockView.invalidate();
-                Log.d("hello", "run() called");
-                handler.postDelayed(this, 1000);
-            }
-        });
     }
     @Override
     public void onDestroy(){
         super.onDestroy();
         //destroy the handler after activity destroyed
-        handler.removeCallbacksAndMessages(null);
+        mClockView.stop();
     }
 }

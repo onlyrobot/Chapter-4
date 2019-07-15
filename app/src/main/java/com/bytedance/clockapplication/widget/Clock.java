@@ -61,6 +61,9 @@ public class Clock extends View {
 
     private boolean mShowAnalog = true;
 
+    private static Handler handler = new Handler() {
+    };
+
     public Clock(Context context) {
         super(context);
         init(context, null);
@@ -109,6 +112,15 @@ public class Clock extends View {
         this.hoursValuesColor = DEFAULT_PRIMARY_COLOR;
 
         numbersColor = Color.WHITE;
+        //init the handler
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                invalidate();
+                Log.d("hello", "run() called");
+                handler.postDelayed(this, 1000);
+            }
+        });
     }
 
     @Override
@@ -296,4 +308,7 @@ public class Clock extends View {
         return mShowAnalog;
     }
 
+    public void stop(){
+        handler.removeCallbacksAndMessages(null );
+    }
 }
